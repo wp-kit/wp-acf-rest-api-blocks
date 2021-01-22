@@ -1,4 +1,3 @@
-
 <?php
 	
 /**
@@ -22,7 +21,8 @@ function wp_acf_rest_api_blocks_init() {
 				$post_type,
 				'gblocks',
 				['get_callback' => function ( array $post ) {
-					return apply_filters( 'rest_response_parse_blocks', json_decode( json_encode( parse_blocks( $post['content']['raw'] ) ) ), $post, $post_type );
+					$blocks = apply_filters( 'rest_response_parse_blocks', json_decode( json_encode( parse_blocks( $post['content']['raw'] ) ) ), $post, $post_type );
+					return array_values(array_filter($blocks, fn($block) => $block->blockName));
 				}]
 			);
 		}
@@ -56,7 +56,7 @@ if( function_exists('acf_register_block_type') ) {
 			}
 		}
 		
-		return array_values(array_filter($blocks, fn($block) => $block->blockName));
+		return $blocks;
 		
 	}
 	
