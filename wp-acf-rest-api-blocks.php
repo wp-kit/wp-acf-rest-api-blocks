@@ -52,7 +52,7 @@ if( function_exists('acf_register_block_type') ) {
 			}
 			
 			if(!empty($block->innerBlocks) && is_array($block->innerBlocks)) {
-				$block->innerBlocks = wp_rest_api_blocks_transform($block->innerBlocks);
+				$block->innerBlocks = wp_acf_rest_api_blocks_filter_response($block->innerBlocks);
 			}
 		}
 		
